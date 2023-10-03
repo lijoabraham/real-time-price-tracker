@@ -1,0 +1,93 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Stock data</title>
+		<script src="https://cdn.jsdelivr.net/npm/luxon@1.26.0"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.1/dist/chart.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+		<script src="https://www.chartjs.org/chartjs-chart-financial/chartjs-chart-financial.js"></script>
+		<link rel="icon" href="./favicon.ico"/>
+	</head>
+	<body>
+		<h1>Price tracker</h1>
+		<div style="width:1000px">
+			<canvas id="chart"></canvas>
+		</div>
+	</body>
+</html>
+<script>
+    
+    var barCount = 60;
+    var initialDateStr = '01 Oct 2023 00:00 Z';
+
+    var ctx = document.getElementById('chart').getContext('2d');
+    ctx.canvas.width = 800;
+    ctx.canvas.height = 400;
+
+    var barData = [];
+    function lineData() { return barData.map(d => { return { x: d.x, y: d.c} }) };
+
+    var chart = new Chart(ctx, {
+        type: 'candlestick',
+        data: {
+            datasets: [{
+                label: 'Stock price data',
+                data: barData
+            }]
+        }
+    });
+
+    var getRandomInt = function(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    };
+
+    function randomNumber(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    function get_bar_data(price_obj) {
+        console.log("price_obj",price_obj)
+        var date = luxon.DateTime.fromRFC2822(price_obj.timestamp);
+        var open = price_obj.open;
+        var close = price_obj.close;
+        var high = price_obj.high;
+        var low = price_obj.low;
+        return {
+            x: date.ts,
+            o: open,
+            h: high,
+            l: low,
+            c: close
+        };
+    }
+
+    var update = function() {
+        var dataset = chart.config.data.datasets[0];
+
+        chart.config.data.datasets = [
+            {
+                label: 'Price data',
+                data: barData
+            },
+            {
+                label: 'Close price',
+                type: 'line',
+                data: lineData()
+            }	
+        ]
+        chart.update();
+    };
+
+    const dataContainer = document.getElementById('data-container');
+    const eventSource = new EventSource('http://localhost:8000/get_realtime_data');
+
+    eventSource.onmessage = (event) => {
+        const data = event.data;
+        console.log(data)
+        const price_obj = JSON.parse(data);
+        bdata = get_bar_data(price_obj)
+        barData.push(bdata)
+        update()
+    };
+</script>

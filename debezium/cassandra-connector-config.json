@@ -1,0 +1,16 @@
+{
+    "name": "cassandra-connector",
+    "config": {
+      "connector.class": "io.debezium.connector.cassandra.Cassandra4Connector",
+      "tasks.max": "1",
+      "database.hostname": "cassandra",
+      "database.port": "9042",
+      "database.user": "cassandra",
+      "database.password": "cassandra",
+      "database.keyspace": "stock_data",
+      "database.history.kafka.bootstrap.servers": "kafka:9092",
+      "database.history.kafka.topic": "cdc-changes-topic",
+      "commit.log.relocation.dir": "/kafka/data/relocation"
+    }
+  }
+  

@@ -1,0 +1,23 @@
+{
+  "name": "mongodb-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.mongodb.MongoDbConnector",
+    "tasks.max": "1", 
+
+    "mongodb.hosts": "mongodb:27017", 
+    "mongodb.name": "stock_data",  
+    "mongodb.user": "root",  
+    "mongodb.password": "root", 
+    "mongodb.authsource": "admin",
+
+    "database.whitelist": "stock_data",
+    "collection.whitelist": "stock_data.prices",
+    "database.history.kafka.bootstrap.servers": "kafka:9092", 
+    "database.history.kafka.topic": "cdc-changes-topic", 
+
+    "transforms": "unwrap",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.drop.tombstones": "false",
+    "topic.prefix": "stock_data-prefix"
+  }
+}

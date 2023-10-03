@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package realtime_data;
+
+message RealTimeDataRequest {
+    // Define your request message here if needed
+}
+
+message RealTimeDataResponse {
+    string data = 1;
+}
+
+service RealTimeDataService {
+    rpc GetData (RealTimeDataRequest) returns (stream RealTimeDataResponse);
+}
