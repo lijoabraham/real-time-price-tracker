@@ -1,4 +1,6 @@
-CREATE TABLE prices (
+CREATE SCHEMA IF NOT EXISTS stock_prices;
+
+CREATE TABLE stock_prices.prices (
     id SERIAL PRIMARY KEY,
     symbol VARCHAR(10) NOT NULL,
     timestamp TIMESTAMP(0) NOT NULL,
