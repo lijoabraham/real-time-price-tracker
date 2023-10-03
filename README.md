@@ -56,7 +56,10 @@ curl -X GET http://localhost:8083/connectors/stock-price-connector/status
 - UI: http://localhost:8000/index 
 - kafdrop UI: http://localhost:9000
 
-### For populating data in DB
-```
-  python price_generator.py
-```
+## End to end steps 
+- Open the UI - http://localhost:8000/index 
+- Run the below script which will insert data into the DB.
+    ```
+    python price_generator.py
+    ```
+- check the UI for real time update of the prices. 
