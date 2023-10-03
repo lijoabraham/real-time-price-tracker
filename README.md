@@ -53,7 +53,7 @@ curl -X GET http://localhost:8083/connectors/stock-price-connector/status
 ```
 
 ### Check accesses
-- UI: http://localhost:8000 
+- UI: http://localhost:8000/index 
 - kafdrop UI: http://localhost:9000
 
 ### For populating data in DB
