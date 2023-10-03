@@ -1,6 +1,8 @@
 # Real Time Price tracker
+## Architecuture
+![Alt text](architecture.drawio.png)
 
-
+![Alt text](image.png)
 ## 🛠 Setup
 
 Clone project
